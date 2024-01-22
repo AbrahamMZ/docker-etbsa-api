@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TypesEnum;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/enums', function () {
+    $types =  TypesEnum::toValues();
+    $typesArray =  TypesEnum::toArray();
+    $typesLabels =  TypesEnum::toLabels();
+    $typesCases =  TypesEnum::cases();
+    $draft = TypesEnum::draft();
+    $published = TypesEnum::Published();
+    return [
+        compact('types'),
+        compact('typesArray'),
+        compact('typesLabels'),
+        $typesCases,
+        $draft->value,
+        $draft->label,
+        $published,
+        $published->label,
+        $draft->equals(TypesEnum::draft()),
+        $published->equals(TypesEnum::draft()),
+    ];
 });
